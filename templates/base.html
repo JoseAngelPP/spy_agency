@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head lang="es">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="Pacific">
+
+        <title>{% block title %}{% endblock title %}</title>
+        <link rel="icon" type="image/png" href="#">
+        
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+        
+      
+
+        <style>
+            .ui#content{
+                padding-top: 25px;
+            }
+        </style>
+        
+
+        {% block includes %}
+        {% endblock includes %}
+
+        <script src="{% static 'js/base.js' %}"></script>
+    </head>
+
+    <body>
+        {% if user.is_authenticated %}
+        <nav id="navbar" class="">
+            <div class="ui tiny menu">
+                <a href="#" >
+                    <div class="ui tiny item">
+                        <img src="" alt="">
+                      </div>
+                  </a>
+                  {% if perms.users.view_customuser %}
+                <a href="{% url 'users:hitmen_list' %}" class="item">
+                <i class="grid layout icon"></i>
+                Hitmen
+                </a>
+                {% endif %}
+                <a href="{% url 'hits:hits_list' %}" class=" item">
+                <i class="table icon"></i>
+                Hits
+                </a>
+                {{user.name}} - {{user.get_rol_display}}
+
+                <div class="right menu">
+                <div class="item">
+                    <a class="ui primary button" href="{% url 'users:logout' %}">Log out</a>
+                </div>
+                </div>
+            </div>
+        </nav>
+        {% else %}
+            
+        {% endif %}
+
+        <div class="ui container" id="content">
+            {% block content %}
+            
+
+        
+            {% endblock content %}
+        </div>
+        
+        {% block modal %}
+        {% endblock modal %}
+        {% block scripts %}
+        {% endblock scripts %}
+
+    </body>
+</html>

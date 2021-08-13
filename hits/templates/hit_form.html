@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+<div class="ui container">
+<section>
+    <div class="ui segment">
+        <h2 class="ui header">
+            <em data-emoji=":axe:"></em>
+            <div class="content">
+                {% if hit %}
+                    Hit detail
+                {% else %}
+                    Create new hit
+                {% endif %}
+            </div>
+            <div class="sub header">
+              
+            </div>
+          </h2>
+    </div>
+</section>
+<section class="section">
+    <div class="ui segment">
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    {{ error|escape }}
+                {% endfor %}
+            {% endfor %}
+          {% endif %}
+
+      <form class="ui form" id="" method="post">
+        {% csrf_token %}
+
+        <div class="two fields">
+            <div class="field">
+                <label for="">{{ form.hitman.label }}</label>
+                    {{ form.hitman }}
+            </div>
+
+            <div class="field">
+                <label for="">{{ form.target_name.label }}</label>
+                    {{ form.target_name }}
+            </div>
+        </div>
+        {% if hit %}
+        <div class="two fields">
+            <div class="field">
+                <label for="">{{ form.status.label }}</label>
+                    {{ form.status }}
+            </div>
+            
+            <div class="field">
+                <label for="">{{ form.created_by.label }}</label>
+                    {{ form.created_by }}
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="field">
+            <label for="">{{ form.description.label }}</label>
+                {{ form.description }}
+        </div>
+        
+    
+    
+        <div class="ui right aligned header">
+         <button id="" type="submit" class="ui green  button">
+            {% if hit %}
+                Save changes
+            {% else %}
+                Create new hit
+            {% endif %}
+         </button>
+        </div>
+    
+      </form>
+    </div>
+</section>
+</div>
+{% endblock content %}

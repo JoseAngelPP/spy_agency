@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section>
+    <div clss="ui masthead vertical segment">
+        <h1 class="ui header">
+            <i class="table icon"></i>
+            <div class="content">
+                Hitmen list
+            </div>
+        </h1>
+    </div>
+
+    <div class="ui segment">
+        <table class="ui selectable celled table" id="example">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>E-mail</th>
+                    <th>Status</th>
+                    <th>Description</th>
+                    <th>Detail</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for hitman in hitmen %}
+                <tr>
+                    <td>{{ hitman.name }}</td>
+                    <td>{{ hitman.email }}</td>
+                    <td>{{ hitman.get_status_display }}</td>
+                    <td>{{ hitman.description }}</td>
+                    <td><a href="{% url 'users:detail_user' hitman.id %}"><i class="circular colored blue eye icon"></i></a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{% endblock content %}
+

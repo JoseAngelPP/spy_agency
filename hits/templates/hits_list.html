@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section>
+    <div clss="ui masthead vertical segment">
+        <h1 class="ui header">
+            <i class="table icon"></i>
+            <div class="content">
+                Hits list
+            </div>
+        </h1>
+    </div>
+    {% if user.rol == 1 or user.rol == 2 %}
+    <section>
+        <div class="ui divider"></div>
+        <div class="ui container">
+            <a class="ui fluid green icon button" href="{% url 'hits:create_hit' %}">
+                <i class="plus icon"></i>
+                Create hit
+            </a>
+        </div>
+    </section>
+    {% endif %}
+
+    <div class="ui segment">
+        <table class="ui selectable celled table" id="example">
+            <thead>
+                <tr>
+                    {% if user.rol == 1 or user.rol == 2 %}
+                        <th>Hitman</th>
+                    {% endif %}
+                    <th>Target name</th>
+                    <th>Status</th>
+                    <th>Created by</th>
+                    <th>Description</th>
+                    <th>Detail</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for hit in hits %}
+                <tr>
+                    {% if user.rol == 1 or user.rol == 2 %}
+                        <td>{{ hit.hitman.name }}</td>
+                    {% endif %}
+                    <td>{{ hit.target_name }}</td>
+                    <td>{{ hit.get_status_display }}</td>
+                    <td>{{ hit.created_by.name }}</td>
+                    <td>{{ hit.description }}</td>
+                    <td><a href="{% url 'hits:detail_hit' hit.id %}"><i class="circular colored blue eye icon"></i></a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{% endblock content %}
+

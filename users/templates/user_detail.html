@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static %}
+{% block includes %}
+<script type="text/javascript" src="{% static 'js/users.js' %}"></script>
+{% endblock includes %}
+
+{% block content %}
+<div class="ui container">
+<section>
+    <div class="ui segment">
+        <h2 class="ui header">
+            <em data-emoji=":detective_tone1:"></em>
+            <div class="content">
+              Edit hitman
+            </div>
+            <div class="sub header">
+              
+            </div>
+          </h2>
+    </div>
+</section>
+<section class="section">
+    <div class="ui segment">
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    {{ error|escape }}
+                {% endfor %}
+            {% endfor %}
+          {% endif %}
+
+      <form class="ui form error" id="create_user_form" method="post">
+        {% csrf_token %}
+
+        <div class="two fields">
+            <div class="field">
+                <label for="">E-mail</label>
+                    {{ object.email }}
+            </div>
+            
+
+            <div class="field">
+                <label for="">Name</label>
+                    {{ object.name }}
+            </div>
+        </div>
+
+        <div class="two fields">
+            <div class="field">
+                <label for="">Rol</label>
+                    {{ object.get_rol_display }}
+            </div>
+
+            <div class="field">
+                <label for="">Status</label>
+                    {{ object.get_status_display }}
+            </div>
+        </div>
+
+        {% if manager %}
+        <div class="field">
+            <label for="">Manager</label>
+            {{ manager.name }}
+        </div>
+        {% endif %}
+
+        {% if object.description %}
+        <div class="field">
+            <label for="">Description</label>
+                {{ object.description }}
+        </div>
+        {% endif %}
+
+        {% if lackeys %}
+        <h4 class="ui horizontal divider header">
+            <i class="address book icon"></i>
+            Lackeys
+        </h4>
+        
+        <div class="ui segment">
+            <table class="ui selectable celled table" id="example">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>E-mail</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for lackey in lackeys %}
+                    <tr>
+                        <td>{{ lackey.name }}</td>
+                        <td>{{ lackey.email }}</td>
+                        <td>{% if lackey.description %} {{ lackey.description }} {% else %} No description{% endif %}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        {% endif %}
+
+        {% if user.rol == 2 %}
+        <div class="ui right aligned header">
+            <a class="ui secondary button" href="{% url 'users:update_user' object.id %}">Edit</a>
+        </div>
+        {% endif %}
+    
+      </form>
+    </div>
+</section>
+</div>
+{% endblock content %}

@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load static %}
+{% block includes %}
+<script type="text/javascript" src="{% static 'js/users.js' %}"></script>
+{% endblock includes %}
+
+{% block content %}
+<div class="ui container">
+<section>
+    <div class="ui segment">
+        <h2 class="ui header">
+            <em data-emoji=":detective_tone1:"></em>
+            <div class="content">
+              Edit hitman
+            </div>
+            <div class="sub header">
+              
+            </div>
+          </h2>
+    </div>
+</section>
+<section class="section">
+    <div class="ui segment">
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    {{ error|escape }}
+                {% endfor %}
+            {% endfor %}
+          {% endif %}
+
+      <form class="ui form error" id="create_user_form" method="post">
+        {% csrf_token %}
+
+        <div class="two fields">
+            <div class="field">
+                <label for="">{{ form.email.label }}</label>
+                    {{ form.email }}
+                <div class="ui error message" id="email_error" style="display: none;">
+                    <p>Invalid email format</p>
+                </div>
+            </div>
+            
+
+            <div class="field">
+                <label for="">{{ form.name.label }}</label>
+                    {{ form.name }}
+            </div>
+        </div>
+
+        <div class="two fields">
+            <div class="field">
+                <label for="">{{ form.rol.label }}</label>
+                    {{ form.rol }}
+            </div>
+
+            <div class="field">
+                <label for="">{{ form.status.label }}</label>
+                    {{ form.status }}
+            </div>
+        </div>
+        {% if hitman.rol == 0 %}
+        <div class="field">
+            <label for="">Manager</label>
+            <select name="manager" id="">
+                <option value="{{manager.id}}" selected>{{manager.name}}</option>
+                {% for manager_in_list in managers %}
+                    <option value="{{manager_in_list.id}}" name={{manager_in_list.id}}>{{manager_in_list.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {% endif %}
+        <div class="field">
+            <label for="">{{ form.description.label }}</label>
+                {{ form.description }}
+        </div>
+
+        {% if lackeys %}
+        <h4 class="ui horizontal divider header">
+            <i class="address book icon"></i>
+            Lackeys
+        </h4>
+        
+        <div class="ui segment">
+            <table class="ui selectable celled table" id="example">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>E-mail</th>
+                        <th>Description</th>
+                        <th>Detail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for lackey in lackeys %}
+                    <tr>
+                        <td>{{ lackey.name }}</td>
+                        <td>{{ lackey.email }}</td>
+                        <td>{% if lackey.description %} {{ lackey.description }} {% else %} No description{% endif %}</td>
+                        <td><a href="{% url 'users:detail_user' lackey.id %}"><i class="circular colored blue eye icon"></i></a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        {% endif %}
+    
+        <div class="ui right aligned header">
+         <button id="" type="submit" class="ui green  button">
+          Save
+         </button>
+        </div>
+    
+      </form>
+    </div>
+</section>
+</div>
+{% endblock content %}

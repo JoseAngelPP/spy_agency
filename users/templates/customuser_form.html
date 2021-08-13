@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+{% block includes %}
+<script type="text/javascript" src="{% static 'js/users.js' %}"></script>
+{% endblock includes %}
+
+{% block content %}
+<div class="ui container">
+<section>
+    <div class="ui segment">
+        <h2 class="ui header">
+            <em data-emoji=":detective_tone1:"></em>
+            <div class="content">
+              Sign up
+            </div>
+            <div class="sub header">
+              
+            </div>
+          </h2>
+    </div>
+</section>
+<section class="section">
+    <div class="ui segment">
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    {{ error|escape }}
+                {% endfor %}
+            {% endfor %}
+          {% endif %}
+
+      <form class="ui form error" id="create_user_form" method="post">
+        {% csrf_token %}
+
+        <div class="three fields">
+            <div class="field">
+                <label for="">{{ form.email.label }}</label>
+                    {{ form.email }}
+                <div class="ui error message" id="email_error" style="display: none;">
+                    <p>Invalid email format</p>
+                </div>
+            </div>
+            
+
+            <div class="field">
+                <label for="">{{ form.name.label }}</label>
+                    {{ form.name }}
+            </div>
+
+            <div class="field">
+                <label for="">{{ form.password.label }}</label>
+                    {{ form.password }}
+                <div class="ui error message" id="password_error" style="display: none;">
+                    <p>Invalid password, must have between 8 and 15 characters</p>
+                </div>
+            </div>
+        </div>
+        
+    
+    
+        <div class="ui right aligned header">
+         <button id="" type="submit" class="ui green  button">
+          Sign up
+         </button>
+        </div>
+    
+      </form>
+    </div>
+</section>
+</div>
+{% endblock content %}

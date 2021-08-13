@@ -1,0 +1,8 @@
+.error {
+    border-color: red !important;
+}
+
+.disable{
+    pointer-events:none !important;
+    background:rgb(231, 231, 231) !important;
+}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- <section class="section">
+    <div class="ui title">Bienvenido</div>
+</section> -->
+<h2 class="ui center aligned icon header">
+  <img class="ui massive image" src="" alt="">
+  <p class="ui orange inverted header"><em data-emoji=":bust_in_silhouette:"></em>Welcome {{request.user.username}}
+  </p>
+  <p><em data-emoji=":calendar_spiral:"></em> <span id="hoy">{% now "l j F Y" %}</span></p>
+</h2>
+
+
+{% endblock content %}

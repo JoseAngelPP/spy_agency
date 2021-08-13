@@ -1,0 +1,15 @@
+**/.idea
+**/.vscode
+**/venv
+**/__pycache__
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py
+
+.env
+
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
